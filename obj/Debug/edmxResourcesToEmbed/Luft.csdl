@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="AirPortDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Airline">
+    <Key>
+      <PropertyRef Name="Name" />
+    </Key>
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Origin" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Airplanes" Relationship="Self.FK__Airplane__OwnerO__276EDEB3" FromRole="Airline" ToRole="Airplane" />
+  </EntityType>
+  <EntityType Name="Airplane">
+    <Key>
+      <PropertyRef Name="AirplaneSerialNumber" />
+    </Key>
+    <Property Name="AirplaneSerialNumber" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="OwnerOfAirplaneFK" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Passenger" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Airline" Relationship="Self.FK__Airplane__OwnerO__276EDEB3" FromRole="Airplane" ToRole="Airline" />
+    <NavigationProperty Name="Rutes" Relationship="Self.FK__Rute__AirplaneOn__2B3F6F97" FromRole="Airplane" ToRole="Rute" />
+  </EntityType>
+  <EntityType Name="Airport">
+    <Key>
+      <PropertyRef Name="Name" />
+    </Key>
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="IATACode" Type="Int32" Nullable="false" />
+    <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Rutes" Relationship="Self.FK__Rute__Destinatio__2A4B4B5E" FromRole="Airport" ToRole="Rute" />
+  </EntityType>
+  <EntityType Name="Rute">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DepartedFrom" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DestinationFK" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="AirplaneOnRuteFK" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Airplane" Relationship="Self.FK__Rute__AirplaneOn__2B3F6F97" FromRole="Rute" ToRole="Airplane" />
+    <NavigationProperty Name="Airport" Relationship="Self.FK__Rute__Destinatio__2A4B4B5E" FromRole="Rute" ToRole="Airport" />
+  </EntityType>
+  <Association Name="FK__Airplane__OwnerO__276EDEB3">
+    <End Role="Airline" Type="Self.Airline" Multiplicity="1" />
+    <End Role="Airplane" Type="Self.Airplane" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Airline">
+        <PropertyRef Name="Name" />
+      </Principal>
+      <Dependent Role="Airplane">
+        <PropertyRef Name="OwnerOfAirplaneFK" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Rute__AirplaneOn__2B3F6F97">
+    <End Role="Airplane" Type="Self.Airplane" Multiplicity="1" />
+    <End Role="Rute" Type="Self.Rute" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Airplane">
+        <PropertyRef Name="AirplaneSerialNumber" />
+      </Principal>
+      <Dependent Role="Rute">
+        <PropertyRef Name="AirplaneOnRuteFK" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Rute__Destinatio__2A4B4B5E">
+    <End Role="Airport" Type="Self.Airport" Multiplicity="1" />
+    <End Role="Rute" Type="Self.Rute" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Airport">
+        <PropertyRef Name="Name" />
+      </Principal>
+      <Dependent Role="Rute">
+        <PropertyRef Name="DestinationFK" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="AirPortDBEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Airlines" EntityType="Self.Airline" />
+    <EntitySet Name="Airplanes" EntityType="Self.Airplane" />
+    <EntitySet Name="Airports" EntityType="Self.Airport" />
+    <EntitySet Name="Rutes" EntityType="Self.Rute" />
+    <AssociationSet Name="FK__Airplane__OwnerO__276EDEB3" Association="Self.FK__Airplane__OwnerO__276EDEB3">
+      <End Role="Airline" EntitySet="Airlines" />
+      <End Role="Airplane" EntitySet="Airplanes" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Rute__AirplaneOn__2B3F6F97" Association="Self.FK__Rute__AirplaneOn__2B3F6F97">
+      <End Role="Airplane" EntitySet="Airplanes" />
+      <End Role="Rute" EntitySet="Rutes" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Rute__Destinatio__2A4B4B5E" Association="Self.FK__Rute__Destinatio__2A4B4B5E">
+      <End Role="Airport" EntitySet="Airports" />
+      <End Role="Rute" EntitySet="Rutes" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

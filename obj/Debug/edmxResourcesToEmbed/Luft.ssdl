@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="AirPortDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Airline">
+    <Key>
+      <PropertyRef Name="Name" />
+    </Key>
+    <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Origin" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Airplane">
+    <Key>
+      <PropertyRef Name="AirplaneSerialNumber" />
+    </Key>
+    <Property Name="AirplaneSerialNumber" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OwnerOfAirplaneFK" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Passenger" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Airport">
+    <Key>
+      <PropertyRef Name="Name" />
+    </Key>
+    <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="IATACode" Type="int" Nullable="false" />
+    <Property Name="Country" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Rute">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DepartedFrom" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="DestinationFK" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="AirplaneOnRuteFK" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__Airplane__OwnerO__276EDEB3">
+    <End Role="Airline" Type="Self.Airline" Multiplicity="1" />
+    <End Role="Airplane" Type="Self.Airplane" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Airline">
+        <PropertyRef Name="Name" />
+      </Principal>
+      <Dependent Role="Airplane">
+        <PropertyRef Name="OwnerOfAirplaneFK" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Rute__AirplaneOn__2B3F6F97">
+    <End Role="Airplane" Type="Self.Airplane" Multiplicity="1" />
+    <End Role="Rute" Type="Self.Rute" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Airplane">
+        <PropertyRef Name="AirplaneSerialNumber" />
+      </Principal>
+      <Dependent Role="Rute">
+        <PropertyRef Name="AirplaneOnRuteFK" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Rute__Destinatio__2A4B4B5E">
+    <End Role="Airport" Type="Self.Airport" Multiplicity="1" />
+    <End Role="Rute" Type="Self.Rute" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Airport">
+        <PropertyRef Name="Name" />
+      </Principal>
+      <Dependent Role="Rute">
+        <PropertyRef Name="DestinationFK" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="AirPortDBModelStoreContainer">
+    <EntitySet Name="Airline" EntityType="Self.Airline" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Airplane" EntityType="Self.Airplane" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Airport" EntityType="Self.Airport" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Rute" EntityType="Self.Rute" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__Airplane__OwnerO__276EDEB3" Association="Self.FK__Airplane__OwnerO__276EDEB3">
+      <End Role="Airline" EntitySet="Airline" />
+      <End Role="Airplane" EntitySet="Airplane" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Rute__AirplaneOn__2B3F6F97" Association="Self.FK__Rute__AirplaneOn__2B3F6F97">
+      <End Role="Airplane" EntitySet="Airplane" />
+      <End Role="Rute" EntitySet="Rute" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Rute__Destinatio__2A4B4B5E" Association="Self.FK__Rute__Destinatio__2A4B4B5E">
+      <End Role="Airport" EntitySet="Airport" />
+      <End Role="Rute" EntitySet="Rute" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

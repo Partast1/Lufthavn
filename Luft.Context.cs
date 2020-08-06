@@ -24,10 +24,10 @@ namespace Lufthavn
         {
             throw new UnintentionalCodeFirstException();
         }
-    
         public virtual DbSet<Airline> Airlines { get; set; }
-        public virtual DbSet<Airplane> Airplanes { get; set; }
         public virtual DbSet<Airport> Airports { get; set; }
         public virtual DbSet<Rute> Rutes { get; set; }
+        public virtual DbSet<Airplane> Airplanes{ get; set; }
+
     }
 }

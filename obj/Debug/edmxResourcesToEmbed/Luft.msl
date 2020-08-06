@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="AirPortDBModelStoreContainer" CdmEntityContainer="AirPortDBEntities">
+    <EntitySetMapping Name="Airlines">
+      <EntityTypeMapping TypeName="AirPortDBModel.Airline">
+        <MappingFragment StoreEntitySet="Airline">
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Origin" ColumnName="Origin" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Airplanes">
+      <EntityTypeMapping TypeName="AirPortDBModel.Airplane">
+        <MappingFragment StoreEntitySet="Airplane">
+          <ScalarProperty Name="AirplaneSerialNumber" ColumnName="AirplaneSerialNumber" />
+          <ScalarProperty Name="OwnerOfAirplaneFK" ColumnName="OwnerOfAirplaneFK" />
+          <ScalarProperty Name="Passenger" ColumnName="Passenger" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Airports">
+      <EntityTypeMapping TypeName="AirPortDBModel.Airport">
+        <MappingFragment StoreEntitySet="Airport">
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="IATACode" ColumnName="IATACode" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Rutes">
+      <EntityTypeMapping TypeName="AirPortDBModel.Rute">
+        <MappingFragment StoreEntitySet="Rute">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="DepartedFrom" ColumnName="DepartedFrom" />
+          <ScalarProperty Name="DestinationFK" ColumnName="DestinationFK" />
+          <ScalarProperty Name="AirplaneOnRuteFK" ColumnName="AirplaneOnRuteFK" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
